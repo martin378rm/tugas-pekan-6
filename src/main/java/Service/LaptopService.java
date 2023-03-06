@@ -4,7 +4,6 @@ import Model.Laptop;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;
-import java.net.URI;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -36,10 +35,10 @@ public class LaptopService {
             if (Objects.nonNull(laptop.getDescription())) {
                 oldLaptop.setDescription(laptop.getDescription());
             }
-            if (Objects.nonNull(laptop.getRam())) {
+            if (laptop.getRam() != 0) {
                 oldLaptop.setRam(laptop.getRam());
             }
-            if (Objects.nonNull(laptop.getInternalStorage())) {
+            if (laptop.getInternalStorage() != 0) {
                 oldLaptop.setInternalStorage(laptop.getInternalStorage());
             }
             oldLaptop.persist();
@@ -62,8 +61,11 @@ public class LaptopService {
     public boolean tambah(Laptop laptop) {
         if (Objects.isNull(laptop.getName()) || Objects.isNull(laptop.getBrands()) || Objects.isNull(laptop.getDescription()) || Objects.isNull(laptop.getRam()) || Objects.isNull(laptop.getInternalStorage()) ){
             return false;
+        } else if (laptop.getRam() == 0 || laptop.getInternalStorage() == 0) {
+            return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
 //    public boolean checked(Laptop laptop) {
